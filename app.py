@@ -93,7 +93,7 @@ elif selected_tab == "EDA & Feature Engineering":
     st.plotly_chart(fig_corr)
 
     # Credit Score Distribution
-    fig_dist = px.histogram(df, x="Credit_Score", color="Credit_Score",
+    fig_dist = px.histogram(df_cleaned, x="Credit_Score", color="Credit_Score",
                             title="Credit Score Distribution/ Imbalance", barmode="group")
     
 
@@ -261,6 +261,7 @@ elif  selected_tab == "Prediction":
             st.success("🎯 **Predicted Credit Score Class:** Good ")
 
  
+
 
 
 
