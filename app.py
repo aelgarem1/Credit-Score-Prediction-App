@@ -178,7 +178,7 @@ elif selected_tab == "Feature Importance":
     # fi_df = fi_df.sort_values("Importance", ascending=False).head(10)
 
     fig = px.bar(fi_df, x="Importance", y="Feature", orientation="h",
-                title="Features By Important", color="Importance", color_continuous_scale="Viridis"
+                title="Features By Importance", color="Importance", color_continuous_scale="Viridis"
                       )
     st.plotly_chart(fig)
 
@@ -261,6 +261,7 @@ elif  selected_tab == "Prediction":
             st.success("🎯 **Predicted Credit Score Class:** Good ")
 
  
+
 
 
 
