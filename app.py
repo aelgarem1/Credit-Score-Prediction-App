@@ -34,7 +34,7 @@ def load_data():
     df_customer = pd.read_csv("df_customer.csv", index_col=[0]) 
     return df_cleaned, df_customer
 
- df_cleaned, df_customer = load_data()
+df_cleaned, df_customer = load_data()
 
 
 na = pd.read_csv("nonaggregated_model_comparison_results1.csv")
@@ -261,6 +261,7 @@ elif  selected_tab == "Prediction":
             st.success("🎯 **Predicted Credit Score Class:** Good ")
 
  
+
 
 
 
