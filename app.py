@@ -31,11 +31,10 @@ with st.sidebar:
 def load_data():
 
     df_cleaned = pd.read_csv("df_cleaned.csv") 
-    df = pd.read_csv("train.csv") 
     df_customer = pd.read_csv("df_customer.csv", index_col=[0]) 
-    return df, df_cleaned, df_customer
+    return df_cleaned, df_customer
 
-df, df_cleaned, df_customer = load_data()
+ df_cleaned, df_customer = load_data()
 
 
 na = pd.read_csv("nonaggregated_model_comparison_results1.csv")
@@ -52,11 +51,11 @@ if selected_tab == "Data Overview":
     st.header("📊 Data Overview")
     st.write("Basic overview of the dataset used for credit score prediction.")
 
-    st.write("**Dataset Shape:**", df.shape)
-    st.write("**Column Names:**", list(df.columns))
+    st.write("**Dataset Shape:**", df_cleaned.shape)
+    st.write("**Column Names:**", list(df_cleaned.columns))
 
     st.subheader("Missing Values per Column")
-    st.dataframe(df.isna().sum().to_frame("Missing Count"))
+    st.dataframe(df_cleaned.isna().sum().to_frame("Missing Count"))
 
     st.subheader("Sample Data")
     st.dataframe(df_cleaned.head())
@@ -262,5 +261,6 @@ elif  selected_tab == "Prediction":
             st.success("🎯 **Predicted Credit Score Class:** Good ")
 
  
+
 
 
