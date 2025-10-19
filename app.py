@@ -30,7 +30,8 @@ with st.sidebar:
 
 def load_data():
 
-    df_cleaned = pd.read_csv("df_cleaned.csv") 
+    df_cleaned = pd.read_csv("df_cleaned.csv", index_col=[0]) 
+    df_cleaned.drrop('Month', axis =1, inplace = True)
     df_customer = pd.read_csv("df_customer.csv", index_col=[0]) 
     return df_cleaned, df_customer
 
@@ -344,6 +345,7 @@ elif  selected_tab == "Prediction":
             st.success("🎯 **Predicted Credit Score Class:** Good ")
 
  
+
 
 
 
