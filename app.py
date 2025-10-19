@@ -325,14 +325,15 @@ elif  selected_tab == "Prediction":
         prediction = best_model.predict(input_df)
         predicted_class = prediction[0]
 
-        if predicted_class == 1:
+        if predicted_class == 2:
              st.success("🎯 **Predicted Credit Score Class:** Poor ")
-        elif predicted_class == 2:
+        elif predicted_class == 1:
              st.success("🎯 **Predicted Credit Score Class:** Standard ")
         else:
             st.success("🎯 **Predicted Credit Score Class:** Good ")
 
  
+
 
 
 
