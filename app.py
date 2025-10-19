@@ -84,7 +84,7 @@ elif selected_tab == "EDA & Feature Engineering":
     fig = px.histogram(df_cleaned, x=numeric_col, nbins=30, title=f"Distribution of {numeric_col}")
     st.plotly_chart(fig)
 
-    target_col = st.selectbox("Select a categorical column to compare with Credit_Score:", df_cleaned.select_dtypes("object").drop('Credit_Score', axis =1).columns)
+    target_col = st.selectbox("Select a numeric column to compare with Credit_Score:", df_cleaned.select_dtypes("number").columns)
     fig = px.box(df_cleaned, x="Credit_Score", y=target_col, color="Credit_Score",
                  title=f"{target_col} distribution across Credit Score")
     st.plotly_chart(fig)
@@ -335,6 +335,7 @@ elif  selected_tab == "Prediction":
             st.success("🎯 **Predicted Credit Score Class:** Good ")
 
  
+
 
 
 
