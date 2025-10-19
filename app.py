@@ -198,29 +198,29 @@ st.markdown("""
 # 5️⃣ Feature Engineering Tab
 # =========================================
 
-    st.header("🧮 Feature Engineering")
+st.header("🧮 Feature Engineering")
 
-    st.markdown("""
-    Feature engineering was performed to capture **repayment capacity**.
-    The following derived features were added:
-    """)
+st.markdown("""
+Feature engineering was performed to capture **repayment capacity**.
+The following derived features were added:
+""")
 
-    engineered_features = pd.DataFrame({
-        "Feature": [
-            "Debt_to_Income_Ratio",
-            "EMI_to_Salary_Ratio"
-        ],
-        "Meaning": [
-            "Total outstanding debt divided by annual income",
-            "Total monthly EMI divided by in-hand salary"
-        ],
-        "Relation to Credit Score": [
-            "High ratio → higher financial stress → lower score",
-            "Higher ratio → repayment burden → lower score"
-        ]
-    })
+engineered_features = pd.DataFrame({
+    "Feature": [
+        "Debt_to_Income_Ratio",
+        "EMI_to_Salary_Ratio"
+    ],
+    "Meaning": [
+        "Total outstanding debt divided by annual income",
+        "Total monthly EMI divided by in-hand salary"
+    ],
+    "Relation to Credit Score": [
+        "High ratio → higher financial stress → lower score",
+        "Higher ratio → repayment burden → lower score"
+    ]
+})
 
-    st.dataframe(engineered_features)
+st.dataframe(engineered_features)
 
 
 
@@ -345,6 +345,7 @@ elif  selected_tab == "Prediction":
             st.success("🎯 **Predicted Credit Score Class:** Good ")
 
  
+
 
 
 
