@@ -153,7 +153,7 @@ elif selected_tab == "EDA & Feature Engineering":
     # ======================================
     with col4:
         fig_income_emi = px.scatter(
-             df_cleaned, x='Annual_Income', y='Total_EMI_per_month',
+             df_customer, x='Annual_Income', y='Total_EMI_per_month',
             color='Credit_Score', title='Income vs EMI by Credit Score',
             size='Outstanding_Debt'
         )
@@ -333,6 +333,7 @@ elif  selected_tab == "Prediction":
             st.success("🎯 **Predicted Credit Score Class:** Good ")
 
  
+
 
 
 
