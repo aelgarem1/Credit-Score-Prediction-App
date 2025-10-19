@@ -78,7 +78,10 @@ elif selected_tab == "EDA & Feature Engineering":
     """)
 
     st.title("📈 Credit Score Analytics")
-    
+    st.markdown("""
+    Explore key relationships between customer behavior and credit score.  
+    Each visualization below reveals patterns in income, spending, credit mix, and occupation.
+    """)
     df_cleaned = df_cleaned.drop('Customer_ID', axis =1)
     numeric_col = st.selectbox("Select a numeric column to visualize:", df_cleaned.select_dtypes("number").columns)
     fig = px.histogram(df_cleaned, x=numeric_col, nbins=30, title=f"Distribution of {numeric_col}")
@@ -108,10 +111,7 @@ elif selected_tab == "EDA & Feature Engineering":
     # )
     # st.plotly_chart(fig_dist, use_container_width= True)
 
-    st.markdown("""
-    Explore key relationships between customer behavior and credit score.  
-    Each visualization below reveals patterns in income, spending, credit mix, and occupation.
-    """)
+
 
 # ======================================
 # Row 1: Credit Score Distribution + Monthly Balance
@@ -151,14 +151,15 @@ elif selected_tab == "EDA & Feature Engineering":
     # ======================================
     # Row 3: Income vs EMI Scatter
     # ======================================
-    fig_income_emi = px.scatter(
-         df_cleaned, x='Annual_Income', y='Total_EMI_per_month',
-        color='Credit_Score', title='Income vs EMI by Credit Score',
-        size='Outstanding_Debt', hover_data=['Age', 'Num_of_Loan'],
-        color_discrete_sequence=px.colors.qualitative.Bold
-    )
-    st.plotly_chart(fig_income_emi, use_container_width=True)
-    
+    with col4:
+        fig_income_emi = px.scatter(
+             df_cleaned, x='Annual_Income', y='Total_EMI_per_month',
+            color='Credit_Score', title='Income vs EMI by Credit Score',
+            size='Outstanding_Debt', hover_data=['Age', 'Num_of_Loan'],
+            color_discrete_sequence=px.colors.qualitative.Bold
+        )
+        st.plotly_chart(fig_income_emi, use_container_width=True)
+        
     # ======================================
     # Row 4: Correlation Heatmap
     # ======================================
@@ -169,8 +170,6 @@ elif selected_tab == "EDA & Feature Engineering":
         corr, title="Feature Correlation Heatmap",
         color_continuous_scale="RdBu", zmin=-1, zmax=1
     )
-    fig_corr.update_xaxes(showticklabels=False)
-    fig_corr.update_yaxes(showticklabels=False)
     st.plotly_chart(fig_corr, use_container_width=True)
     
     # ======================================
@@ -335,6 +334,7 @@ elif  selected_tab == "Prediction":
             st.success("🎯 **Predicted Credit Score Class:** Good ")
 
  
+
 
 
 
