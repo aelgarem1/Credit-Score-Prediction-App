@@ -145,9 +145,9 @@ elif selected_tab == "EDA & Feature Engineering":
 
 # 1️⃣ EMI to Salary Ratio vs Credit Score (Boxplot)
     with col3:
-        df["EMI_to_Salary_Ratio"] = df["Total_EMI_per_month"] / df["Monthly_Inhand_Salary"]
+
         fig_ratio = px.box(
-            df, x='Credit_Score', y='EMI_to_Salary_Ratio', color='Credit_Score',
+            df_customer, x='Credit_Score', y='EMI_to_Salary_Ratio', color='Credit_Score',
             title='EMI-to-Salary Ratio vs Credit Score',
             color_discrete_sequence=px.colors.qualitative.Bold
         )
@@ -157,7 +157,7 @@ elif selected_tab == "EDA & Feature Engineering":
     # 2️⃣ Payment Delay Frequency by Credit Score
     with col4:
         fig_delay = px.box(
-            df, x='Credit_Score', y='Num_of_Delayed_Payment', color='Credit_Score',
+            df_cleaned, x='Credit_Score', y='Num_of_Delayed_Payment', color='Credit_Score',
             title='Delayed Payments by Credit Score',
             color_discrete_sequence=px.colors.qualitative.Dark2
         )
@@ -344,6 +344,7 @@ elif  selected_tab == "Prediction":
             st.success("🎯 **Predicted Credit Score Class:** Good ")
 
  
+
 
 
 
