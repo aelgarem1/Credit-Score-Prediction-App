@@ -127,13 +127,15 @@ elif selected_tab == "EDA & Feature Engineering":
         fig_score_dist.update_layout(bargap=0.2)
         st.plotly_chart(fig_score_dist, use_container_width=True)
     
-    with col2:
-        fig_balance = px.box(
-             df_cleaned, x='Credit_Score', y='Monthly_Balance',
-            color='Credit_Score', title='Monthly Balance by Credit Score',
-            color_discrete_sequence=px.colors.qualitative.Set2
-        )
-        st.plotly_chart(fig_balance, use_container_width=True)
+    with col5:
+ 
+    fig_ratio = px.box(
+        df_customer, x='Credit_Score', y='EMI_to_Salary_Ratio', color='Credit_Score',
+        title='EMI-to-Salary Ratio vs Credit Score',
+        color_discrete_sequence=px.colors.qualitative.Bold
+    )
+    fig_ratio.update_yaxes(title="EMI / Salary Ratio")
+    st.plotly_chart(fig_ratio, use_container_width=True)
     
     # ======================================
     # Row 2: Credit Mix + Occupation
@@ -152,23 +154,30 @@ elif selected_tab == "EDA & Feature Engineering":
     # Row 3: Income vs EMI Scatter
     # ======================================
     with col4:
-        fig_income_emi = px.scatter(
-             df_customer, x='Annual_Income', y='Total_EMI_per_month',
-            color='Credit_Score', title='Income vs EMI by Credit Score',
-            size='Outstanding_Debt'
+
+        fig_delay = px.box(
+            df_customer, x='Credit_Score', y='Num_of_Delayed_Payment', color='Credit_Score',
+            title='Delayed Payments by Credit Score',
+            color_discrete_sequence=px.colors.qualitative.Dark2
         )
-        st.plotly_chart(fig_income_emi, use_container_width=True)
+        fig_delay.update_yaxes(title="Number of Delayed Payments")
+        st.plotly_chart(fig_delay, use_container_width=True)
         
     # ======================================
     # Row 4: Correlation Heatmap
     # ======================================
-    st.markdown("### 🔄 Feature Correlation Heatmap")
-    
-    corr =  df_customer.select_dtypes("number").corr()
+    st.markdown("### 🔥 Correlation Heatmap of Numeric Features")
+
+    corr = df.select_dtypes("number").corr()
     fig_corr = px.imshow(
-        corr, title="Feature Correlation Heatmap",
-        color_continuous_scale="RdBu", zmin=-1, zmax=1
+        corr, 
+        title="Feature Correlation Heatmap",
+        color_continuous_scale="RdBu",
+        zmin=-1, zmax=1,
+        width=1000, height=700
     )
+    fig_corr.update_xaxes(showticklabels=False)
+    fig_corr.update_yaxes(showticklabels=False)
     st.plotly_chart(fig_corr, use_container_width=True)
     
     # ======================================
@@ -176,10 +185,11 @@ elif selected_tab == "EDA & Feature Engineering":
     # ======================================
     st.markdown("""
     ### 💡 Key Insights
-    - Customers with **higher monthly balances** and **lower EMI burdens** tend to have **Good** credit scores. 
     - A **diverse credit mix** correlates with higher creditworthiness.  
-    - **Outstanding debt** and **delayed payments** show negative correlation with the credit score.  
+    - **EMI-to-Salary Ratio** sharply differentiates creditworthiness — customers with ratios <0.4 generally have *Good* scores.  
+    - Frequent **delayed payments** strongly correlate with *Poor* credit scores.  
     """)
+        """)
     
 
 # =========================================
@@ -333,6 +343,7 @@ elif  selected_tab == "Prediction":
             st.success("🎯 **Predicted Credit Score Class:** Good ")
 
  
+
 
 
 
