@@ -75,6 +75,9 @@ elif selected_tab == "EDA & Feature Engineering":
     - Summary statistics for numeric features  
     - Distribution of key numerical columns
     """)
+
+    st.title("📈 Credit Score Analytics")
+    
     df_cleaned = df_cleaned.drop('Customer_ID', axis =1)
     numeric_col = st.selectbox("Select a numeric column to visualize:", df_cleaned.select_dtypes("number").columns)
     fig = px.histogram(df_cleaned, x=numeric_col, nbins=30, title=f"Distribution of {numeric_col}")
@@ -104,11 +107,91 @@ elif selected_tab == "EDA & Feature Engineering":
     )
     st.plotly_chart(fig_dist, use_container_width= True)
 
-    # st.write("""
-    # - Strong correlation between **Debt_to_Income_Ratio** and **Outstanding_Debt**  
-    # - Customers with high **Delay_from_due_date** tend to have lower credit scores  
-    # - Occupations with lower average salaries show higher default rates
-    # """)
+st.markdown("""
+Explore key relationships between customer behavior and credit score.  
+Each visualization below reveals patterns in income, spending, credit mix, and occupation.
+""")
+
+# ======================================
+# Row 1: Credit Score Distribution + Monthly Balance
+# ======================================
+col1, col2 = st.columns(2)
+
+with col1:
+    fig_score_dist = px.histogram(
+        df, x='Credit_Score', color='Credit_Score',
+        title='Credit Score Distribution',
+        text_auto=True, color_discrete_sequence=px.colors.qualitative.Set2
+    )
+    fig_score_dist.update_layout(bargap=0.2)
+    st.plotly_chart(fig_score_dist, use_container_width=True)
+
+with col2:
+    fig_balance = px.box(
+        df, x='Credit_Score', y='Monthly_Balance',
+        color='Credit_Score', title='Monthly Balance by Credit Score',
+        color_discrete_sequence=px.colors.qualitative.Set2
+    )
+    st.plotly_chart(fig_balance, use_container_width=True)
+
+# ======================================
+# Row 2: Credit Mix + Occupation
+# ======================================
+col3, col4 = st.columns(2)
+
+with col3:
+    fig_mix = px.histogram(
+        df, x='Credit_Mix', color='Credit_Score',
+        barmode='group', title='Credit Mix vs Credit Score',
+        color_discrete_sequence=px.colors.qualitative.Set2
+    )
+    st.plotly_chart(fig_mix, use_container_width=True)
+
+with col4:
+    fig_occ = px.histogram(
+        df, x='Occupation', color='Credit_Score',
+        barmode='group', title='Occupation vs Credit Score',
+        color_discrete_sequence=px.colors.qualitative.Set3
+    )
+    fig_occ.update_xaxes(categoryorder='total descending')
+    st.plotly_chart(fig_occ, use_container_width=True)
+
+# ======================================
+# Row 3: Income vs EMI Scatter
+# ======================================
+fig_income_emi = px.scatter(
+    df, x='Annual_Income', y='Total_EMI_per_month',
+    color='Credit_Score', title='Income vs EMI by Credit Score',
+    size='Outstanding_Debt', hover_data=['Age', 'Num_of_Loan'],
+    color_discrete_sequence=px.colors.qualitative.Bold
+)
+st.plotly_chart(fig_income_emi, use_container_width=True)
+
+# ======================================
+# Row 4: Correlation Heatmap
+# ======================================
+st.markdown("### 🔄 Feature Correlation Heatmap")
+
+corr = df.select_dtypes("number").corr()
+fig_corr = px.imshow(
+    corr, title="Feature Correlation Heatmap",
+    color_continuous_scale="RdBu", zmin=-1, zmax=1
+)
+fig_corr.update_xaxes(showticklabels=False)
+fig_corr.update_yaxes(showticklabels=False)
+st.plotly_chart(fig_corr, use_container_width=True)
+
+# ======================================
+# Insights Section
+# ======================================
+st.markdown("""
+### 💡 Key Insights
+- Customers with **higher monthly balances** and **lower EMI burdens** tend to have **Good** credit scores.  
+- **Occupation type** influences credit behavior — salaried professionals show stronger repayment discipline.  
+- A **diverse credit mix** correlates with higher creditworthiness.  
+- **Outstanding debt** and **delayed payments** show negative correlation with the credit score.  
+""")
+
 
 # =========================================
 # 5️⃣ Feature Engineering Tab
@@ -261,6 +344,7 @@ elif  selected_tab == "Prediction":
             st.success("🎯 **Predicted Credit Score Class:** Good ")
 
  
+
 
 
 
