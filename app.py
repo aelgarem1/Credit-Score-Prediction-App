@@ -146,17 +146,7 @@ elif selected_tab == "EDA & Feature Engineering":
 # 1️⃣ EMI to Salary Ratio vs Credit Score (Boxplot)
     with col3:
 
-        fig_ratio = px.box(
-            df_customer, x='Credit_Score', y='EMI_to_Salary_Ratio', color='Credit_Score',
-            title='EMI-to-Salary Ratio vs Credit Score',
-            color_discrete_sequence=px.colors.qualitative.Bold
-        )
-        fig_ratio.update_yaxes(title="EMI / Salary Ratio")
-        st.plotly_chart(fig_ratio, use_container_width=True)
-    
-    # 2️⃣ Payment Delay Frequency by Credit Score
-    with col4:
-        fig_delay = px.box(
+      fig_delay = px.box(
             df_cleaned, x='Credit_Score', y='Num_of_Delayed_Payment', color='Credit_Score',
             title='Delayed Payments by Credit Score',
             color_discrete_sequence=px.colors.qualitative.Dark2
@@ -164,6 +154,7 @@ elif selected_tab == "EDA & Feature Engineering":
         fig_delay.update_yaxes(title="Number of Delayed Payments")
         st.plotly_chart(fig_delay, use_container_width=True)
     
+
             
     # ======================================
     # Row 4: Correlation Heatmap
@@ -344,6 +335,7 @@ elif  selected_tab == "Prediction":
             st.success("🎯 **Predicted Credit Score Class:** Good ")
 
  
+
 
 
 
