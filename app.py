@@ -151,8 +151,8 @@ elif selected_tab == "EDA & Feature Engineering":
             title='Delayed Payments by Credit Score',
             color_discrete_sequence=px.colors.qualitative.Dark2
         )
-        fig_delay.update_yaxes(title="Number of Delayed Payments")
-        st.plotly_chart(fig_delay, use_container_width=True)
+    fig_delay.update_yaxes(title="Number of Delayed Payments")
+    st.plotly_chart(fig_delay, use_container_width=True)
     
 
             
@@ -335,6 +335,7 @@ elif  selected_tab == "Prediction":
             st.success("🎯 **Predicted Credit Score Class:** Good ")
 
  
+
 
 
 
