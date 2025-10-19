@@ -155,8 +155,7 @@ elif selected_tab == "EDA & Feature Engineering":
         fig_income_emi = px.scatter(
              df_cleaned, x='Annual_Income', y='Total_EMI_per_month',
             color='Credit_Score', title='Income vs EMI by Credit Score',
-            size='Outstanding_Debt',
-            color_discrete_sequence=px.colors.qualitative.Bold
+            size='Outstanding_Debt'
         )
         st.plotly_chart(fig_income_emi, use_container_width=True)
         
@@ -334,6 +333,7 @@ elif  selected_tab == "Prediction":
             st.success("🎯 **Predicted Credit Score Class:** Good ")
 
  
+
 
 
 
