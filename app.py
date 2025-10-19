@@ -120,7 +120,7 @@ elif selected_tab == "EDA & Feature Engineering":
     
     with col1:
         fig_score_dist = px.histogram(
-            df, x='Credit_Score', color='Credit_Score',
+            df_cleaned, x='Credit_Score', color='Credit_Score',
             title='Credit Score Distribution',
             text_auto=True, color_discrete_sequence=px.colors.qualitative.Set2
         )
@@ -129,7 +129,7 @@ elif selected_tab == "EDA & Feature Engineering":
     
     with col2:
         fig_balance = px.box(
-            df, x='Credit_Score', y='Monthly_Balance',
+             df_cleaned, x='Credit_Score', y='Monthly_Balance',
             color='Credit_Score', title='Monthly Balance by Credit Score',
             color_discrete_sequence=px.colors.qualitative.Set2
         )
@@ -142,26 +142,17 @@ elif selected_tab == "EDA & Feature Engineering":
     
     with col3:
         fig_mix = px.histogram(
-            df, x='Credit_Mix', color='Credit_Score',
+             df_cleaned, x='Credit_Mix', color='Credit_Score',
             barmode='group', title='Credit Mix vs Credit Score',
             color_discrete_sequence=px.colors.qualitative.Set2
         )
         st.plotly_chart(fig_mix, use_container_width=True)
-    
-    with col4:
-        fig_occ = px.histogram(
-            df, x='Occupation', color='Credit_Score',
-            barmode='group', title='Occupation vs Credit Score',
-            color_discrete_sequence=px.colors.qualitative.Set3
-        )
-        fig_occ.update_xaxes(categoryorder='total descending')
-        st.plotly_chart(fig_occ, use_container_width=True)
-    
+
     # ======================================
     # Row 3: Income vs EMI Scatter
     # ======================================
     fig_income_emi = px.scatter(
-        df, x='Annual_Income', y='Total_EMI_per_month',
+         df_cleaned, x='Annual_Income', y='Total_EMI_per_month',
         color='Credit_Score', title='Income vs EMI by Credit Score',
         size='Outstanding_Debt', hover_data=['Age', 'Num_of_Loan'],
         color_discrete_sequence=px.colors.qualitative.Bold
@@ -173,7 +164,7 @@ elif selected_tab == "EDA & Feature Engineering":
     # ======================================
     st.markdown("### 🔄 Feature Correlation Heatmap")
     
-    corr = df.select_dtypes("number").corr()
+    corr =  df_cleaned.select_dtypes("number").corr()
     fig_corr = px.imshow(
         corr, title="Feature Correlation Heatmap",
         color_continuous_scale="RdBu", zmin=-1, zmax=1
@@ -187,8 +178,7 @@ elif selected_tab == "EDA & Feature Engineering":
     # ======================================
     st.markdown("""
     ### 💡 Key Insights
-    - Customers with **higher monthly balances** and **lower EMI burdens** tend to have **Good** credit scores.  
-    - **Occupation type** influences credit behavior — salaried professionals show stronger repayment discipline.  
+    - Customers with **higher monthly balances** and **lower EMI burdens** tend to have **Good** credit scores. 
     - A **diverse credit mix** correlates with higher creditworthiness.  
     - **Outstanding debt** and **delayed payments** show negative correlation with the credit score.  
     """)
@@ -345,6 +335,7 @@ elif  selected_tab == "Prediction":
             st.success("🎯 **Predicted Credit Score Class:** Good ")
 
  
+
 
 
 
