@@ -90,137 +90,137 @@ elif selected_tab == "EDA & Feature Engineering":
     st.plotly_chart(fig)
 
 
-    # Correlation heatmap
-    corr = df_customer.select_dtypes("number").corr()
-    fig_corr = px.imshow(corr, text_auto=False, title="Feature Correlation Heatmap",
-                         color_continuous_scale="RdBu", zmin=-1, zmax=1)
-    st.plotly_chart(fig_corr)
+    # # Correlation heatmap
+    # corr = df_customer.select_dtypes("number").corr()
+    # fig_corr = px.imshow(corr, text_auto=False, title="Feature Correlation Heatmap",
+    #                      color_continuous_scale="RdBu", zmin=-1, zmax=1)
+    # st.plotly_chart(fig_corr)
 
-    # Credit Score Distribution
-    fig_dist = px.histogram(df_cleaned, x="Credit_Score", color="Credit_Score",
-                            title="Credit Score Distribution/ Imbalance", barmode="group")
+    # # Credit Score Distribution
+    # fig_dist = px.histogram(df_cleaned, x="Credit_Score", color="Credit_Score",
+    #                         title="Credit Score Distribution/ Imbalance", barmode="group")
     
 
-    fig_corr.update_layout(
-    width=1200,   # width in pixels
-    height=800,   # height in pixels
-    title_x=0.5,  # center title
-    )
-    st.plotly_chart(fig_dist, use_container_width= True)
+    # fig_corr.update_layout(
+    # width=1200,   # width in pixels
+    # height=800,   # height in pixels
+    # title_x=0.5,  # center title
+    # )
+    # st.plotly_chart(fig_dist, use_container_width= True)
 
-st.markdown("""
-Explore key relationships between customer behavior and credit score.  
-Each visualization below reveals patterns in income, spending, credit mix, and occupation.
-""")
+    st.markdown("""
+    Explore key relationships between customer behavior and credit score.  
+    Each visualization below reveals patterns in income, spending, credit mix, and occupation.
+    """)
 
 # ======================================
 # Row 1: Credit Score Distribution + Monthly Balance
 # ======================================
-col1, col2 = st.columns(2)
-
-with col1:
-    fig_score_dist = px.histogram(
-        df, x='Credit_Score', color='Credit_Score',
-        title='Credit Score Distribution',
-        text_auto=True, color_discrete_sequence=px.colors.qualitative.Set2
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        fig_score_dist = px.histogram(
+            df, x='Credit_Score', color='Credit_Score',
+            title='Credit Score Distribution',
+            text_auto=True, color_discrete_sequence=px.colors.qualitative.Set2
+        )
+        fig_score_dist.update_layout(bargap=0.2)
+        st.plotly_chart(fig_score_dist, use_container_width=True)
+    
+    with col2:
+        fig_balance = px.box(
+            df, x='Credit_Score', y='Monthly_Balance',
+            color='Credit_Score', title='Monthly Balance by Credit Score',
+            color_discrete_sequence=px.colors.qualitative.Set2
+        )
+        st.plotly_chart(fig_balance, use_container_width=True)
+    
+    # ======================================
+    # Row 2: Credit Mix + Occupation
+    # ======================================
+    col3, col4 = st.columns(2)
+    
+    with col3:
+        fig_mix = px.histogram(
+            df, x='Credit_Mix', color='Credit_Score',
+            barmode='group', title='Credit Mix vs Credit Score',
+            color_discrete_sequence=px.colors.qualitative.Set2
+        )
+        st.plotly_chart(fig_mix, use_container_width=True)
+    
+    with col4:
+        fig_occ = px.histogram(
+            df, x='Occupation', color='Credit_Score',
+            barmode='group', title='Occupation vs Credit Score',
+            color_discrete_sequence=px.colors.qualitative.Set3
+        )
+        fig_occ.update_xaxes(categoryorder='total descending')
+        st.plotly_chart(fig_occ, use_container_width=True)
+    
+    # ======================================
+    # Row 3: Income vs EMI Scatter
+    # ======================================
+    fig_income_emi = px.scatter(
+        df, x='Annual_Income', y='Total_EMI_per_month',
+        color='Credit_Score', title='Income vs EMI by Credit Score',
+        size='Outstanding_Debt', hover_data=['Age', 'Num_of_Loan'],
+        color_discrete_sequence=px.colors.qualitative.Bold
     )
-    fig_score_dist.update_layout(bargap=0.2)
-    st.plotly_chart(fig_score_dist, use_container_width=True)
-
-with col2:
-    fig_balance = px.box(
-        df, x='Credit_Score', y='Monthly_Balance',
-        color='Credit_Score', title='Monthly Balance by Credit Score',
-        color_discrete_sequence=px.colors.qualitative.Set2
+    st.plotly_chart(fig_income_emi, use_container_width=True)
+    
+    # ======================================
+    # Row 4: Correlation Heatmap
+    # ======================================
+    st.markdown("### 🔄 Feature Correlation Heatmap")
+    
+    corr = df.select_dtypes("number").corr()
+    fig_corr = px.imshow(
+        corr, title="Feature Correlation Heatmap",
+        color_continuous_scale="RdBu", zmin=-1, zmax=1
     )
-    st.plotly_chart(fig_balance, use_container_width=True)
-
-# ======================================
-# Row 2: Credit Mix + Occupation
-# ======================================
-col3, col4 = st.columns(2)
-
-with col3:
-    fig_mix = px.histogram(
-        df, x='Credit_Mix', color='Credit_Score',
-        barmode='group', title='Credit Mix vs Credit Score',
-        color_discrete_sequence=px.colors.qualitative.Set2
-    )
-    st.plotly_chart(fig_mix, use_container_width=True)
-
-with col4:
-    fig_occ = px.histogram(
-        df, x='Occupation', color='Credit_Score',
-        barmode='group', title='Occupation vs Credit Score',
-        color_discrete_sequence=px.colors.qualitative.Set3
-    )
-    fig_occ.update_xaxes(categoryorder='total descending')
-    st.plotly_chart(fig_occ, use_container_width=True)
-
-# ======================================
-# Row 3: Income vs EMI Scatter
-# ======================================
-fig_income_emi = px.scatter(
-    df, x='Annual_Income', y='Total_EMI_per_month',
-    color='Credit_Score', title='Income vs EMI by Credit Score',
-    size='Outstanding_Debt', hover_data=['Age', 'Num_of_Loan'],
-    color_discrete_sequence=px.colors.qualitative.Bold
-)
-st.plotly_chart(fig_income_emi, use_container_width=True)
-
-# ======================================
-# Row 4: Correlation Heatmap
-# ======================================
-st.markdown("### 🔄 Feature Correlation Heatmap")
-
-corr = df.select_dtypes("number").corr()
-fig_corr = px.imshow(
-    corr, title="Feature Correlation Heatmap",
-    color_continuous_scale="RdBu", zmin=-1, zmax=1
-)
-fig_corr.update_xaxes(showticklabels=False)
-fig_corr.update_yaxes(showticklabels=False)
-st.plotly_chart(fig_corr, use_container_width=True)
-
-# ======================================
-# Insights Section
-# ======================================
-st.markdown("""
-### 💡 Key Insights
-- Customers with **higher monthly balances** and **lower EMI burdens** tend to have **Good** credit scores.  
-- **Occupation type** influences credit behavior — salaried professionals show stronger repayment discipline.  
-- A **diverse credit mix** correlates with higher creditworthiness.  
-- **Outstanding debt** and **delayed payments** show negative correlation with the credit score.  
-""")
-
+    fig_corr.update_xaxes(showticklabels=False)
+    fig_corr.update_yaxes(showticklabels=False)
+    st.plotly_chart(fig_corr, use_container_width=True)
+    
+    # ======================================
+    # Insights Section
+    # ======================================
+    st.markdown("""
+    ### 💡 Key Insights
+    - Customers with **higher monthly balances** and **lower EMI burdens** tend to have **Good** credit scores.  
+    - **Occupation type** influences credit behavior — salaried professionals show stronger repayment discipline.  
+    - A **diverse credit mix** correlates with higher creditworthiness.  
+    - **Outstanding debt** and **delayed payments** show negative correlation with the credit score.  
+    """)
+    
 
 # =========================================
 # 5️⃣ Feature Engineering Tab
 # =========================================
 
-st.header("🧮 Feature Engineering")
-
-st.markdown("""
-Feature engineering was performed to capture **repayment capacity**.
-The following derived features were added:
-""")
-
-engineered_features = pd.DataFrame({
-    "Feature": [
-        "Debt_to_Income_Ratio",
-        "EMI_to_Salary_Ratio"
-    ],
-    "Meaning": [
-        "Total outstanding debt divided by annual income",
-        "Total monthly EMI divided by in-hand salary"
-    ],
-    "Relation to Credit Score": [
-        "High ratio → higher financial stress → lower score",
-        "Higher ratio → repayment burden → lower score"
-    ]
-})
-
-st.dataframe(engineered_features)
+    st.header("🧮 Feature Engineering")
+    
+    st.markdown("""
+    Feature engineering was performed to capture **repayment capacity**.
+    The following derived features were added:
+    """)
+    
+    engineered_features = pd.DataFrame({
+        "Feature": [
+            "Debt_to_Income_Ratio",
+            "EMI_to_Salary_Ratio"
+        ],
+        "Meaning": [
+            "Total outstanding debt divided by annual income",
+            "Total monthly EMI divided by in-hand salary"
+        ],
+        "Relation to Credit Score": [
+            "High ratio → higher financial stress → lower score",
+            "Higher ratio → repayment burden → lower score"
+        ]
+    })
+    
+    st.dataframe(engineered_features)
 
 
 
@@ -345,6 +345,7 @@ elif  selected_tab == "Prediction":
             st.success("🎯 **Predicted Credit Score Class:** Good ")
 
  
+
 
 
 
