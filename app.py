@@ -189,8 +189,7 @@ elif selected_tab == "EDA & Feature Engineering":
     - **EMI-to-Salary Ratio** sharply differentiates creditworthiness — customers with ratios <0.4 generally have *Good* scores.  
     - Frequent **delayed payments** strongly correlate with *Poor* credit scores.  
     """)
-        """)
-    
+
 
 # =========================================
 # 5️⃣ Feature Engineering Tab
@@ -343,6 +342,7 @@ elif  selected_tab == "Prediction":
             st.success("🎯 **Predicted Credit Score Class:** Good ")
 
  
+
 
 
 
