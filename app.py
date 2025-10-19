@@ -164,7 +164,7 @@ elif selected_tab == "EDA & Feature Engineering":
     # ======================================
     st.markdown("### 🔄 Feature Correlation Heatmap")
     
-    corr =  df_cleaned.select_dtypes("number").corr()
+    corr =  df_customer.select_dtypes("number").corr()
     fig_corr = px.imshow(
         corr, title="Feature Correlation Heatmap",
         color_continuous_scale="RdBu", zmin=-1, zmax=1
@@ -333,6 +333,7 @@ elif  selected_tab == "Prediction":
             st.success("🎯 **Predicted Credit Score Class:** Good ")
 
  
+
 
 
 
