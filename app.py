@@ -127,7 +127,7 @@ elif selected_tab == "EDA & Feature Engineering":
         fig_score_dist.update_layout(bargap=0.2)
         st.plotly_chart(fig_score_dist, use_container_width=True)
     
-    with col5:
+    with col2:
  
         fig_ratio = px.box(
             df_customer, x='Credit_Score', y='EMI_to_Salary_Ratio', color='Credit_Score',
@@ -342,6 +342,7 @@ elif  selected_tab == "Prediction":
             st.success("🎯 **Predicted Credit Score Class:** Good ")
 
  
+
 
 
 
